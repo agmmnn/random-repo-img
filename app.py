@@ -1,21 +1,23 @@
 # originallly from https://github.com/techytushar/random-memer
 import requests
 from flask import Flask, send_file, render_template, jsonify, redirect
-import random
+from random import *
 from io import BytesIO
 from PIL import Image
-import json
 
 app = Flask(__name__, static_url_path="/pages")
 
+GH_API_KEY = ""
 s = requests.Session()
 
-
+# https://random-repo-img.herokuapp.com/agmmnn/random-repo-img/sample_imgs
+# https://api.github.com/repos/agmmnn/random-repo-img/contents/sample_imgs
 def get_repo_images(a, b, c):
     url = f"https://api.github.com/repos/{a}/{b}/contents/{c}"
-    print(url)
-    data = json.loads(s.get(url).content)
+    headers = {"Authorization": "token " + GH_API_KEY}
+    data = s.get(url, headers=headers).json()
     imgs = []
+    print(url)
     for i in data:
         try:
             if i["download_url"].split(".")[-1] in ["jpg", "png", "jpeg"]:
@@ -24,6 +26,8 @@ def get_repo_images(a, b, c):
             print(">> Error")
             print(">> Redirecting to home")
             return redirect("/")
+    print(imgs)
+    print(len(imgs))
     return imgs
 
 
@@ -58,7 +62,7 @@ def return_img_list(a, b, c):
 
 @app.route("/<a>/<b>/<c>", methods=["GET"])
 def return_img(a, b, c):
-    img_urls = random.choice(get_repo_images(a, b, c))
+    img_urls = choice(get_repo_images(a, b, c))
     res = s.get(img_urls, stream=True)
     res.raw.decode_content = True
     img = Image.open(res.raw)
