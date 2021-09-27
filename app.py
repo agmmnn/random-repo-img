@@ -1,5 +1,6 @@
+# originallly from https://github.com/techytushar/random-memer
 import requests
-from flask import Flask, send_file, send_from_directory
+from flask import Flask, send_file, render_template, jsonify, redirect
 import random
 from io import BytesIO
 from PIL import Image
@@ -16,7 +17,13 @@ def get_repo_images(a, b, c):
     data = json.loads(s.get(url).content)
     imgs = []
     for i in data:
-        imgs.append(i["download_url"])
+        try:
+            if i["download_url"].split(".")[-1] in ["jpg", "png", "jpeg"]:
+                imgs.append(i["download_url"])
+        except:
+            print(">> Error")
+            print(">> Redirecting to home")
+            return redirect("/")
     return imgs
 
 
@@ -40,13 +47,24 @@ def set_response_headers(response):
 
 @app.route("/", methods=["GET"])
 def homie():
-    return send_from_directory("pages", "index.html")
+    return render_template("index.html")
+
+
+@app.route("/<a>/<b>/<c>/list", methods=["GET"])
+def return_img_list(a, b, c):
+    img_urls = get_repo_images(a, b, c)
+    return jsonify(img_urls)
 
 
 @app.route("/<a>/<b>/<c>", methods=["GET"])
-def return_meme(a, b, c):
-    img_url = random.choice(get_repo_images(a, b, c))
-    res = s.get(img_url, stream=True)
+def return_img(a, b, c):
+    img_urls = random.choice(get_repo_images(a, b, c))
+    res = s.get(img_urls, stream=True)
     res.raw.decode_content = True
     img = Image.open(res.raw)
     return serve_pil_image(img)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return redirect("/")
