@@ -4,6 +4,7 @@ from flask import Flask, send_file, render_template, jsonify, redirect
 from random import *
 from io import BytesIO
 from PIL import Image
+from rich import print
 
 app = Flask(__name__, static_url_path="/pages")
 
@@ -17,7 +18,7 @@ def get_repo_images(a, b, c):
     headers = {"Authorization": "token " + GH_API_KEY}
     data = s.get(url, headers=headers).json()
     imgs = []
-    print(url)
+
     for i in data:
         try:
             if i["download_url"].split(".")[-1] in ["jpg", "png", "jpeg"]:
@@ -26,6 +27,7 @@ def get_repo_images(a, b, c):
             print(">> Error")
             print(">> Redirecting to home")
             return redirect("/")
+    print(url)
     print(imgs)
     print(len(imgs))
     return imgs
