@@ -1,10 +1,9 @@
-# originallly from https://github.com/techytushar/random-memer
+# originally from: https://github.com/techytushar/random-memer
 import requests
 from flask import Flask, send_file, render_template, jsonify, redirect
-from random import *
+from random import choice
 from io import BytesIO
 from PIL import Image
-from rich import print
 
 app = Flask(__name__, static_url_path="/pages")
 
@@ -24,9 +23,7 @@ def get_repo_images(a, b, c):
             if i["download_url"].split(".")[-1] in ["jpg", "png", "jpeg"]:
                 imgs.append(i["download_url"])
         except:
-            print(">> Error")
-            print(">> Redirecting to home")
-            return redirect("/")
+            return False
     print(url)
     print(imgs)
     print(len(imgs))
@@ -64,8 +61,12 @@ def return_img_list(a, b, c):
 
 @app.route("/<a>/<b>/<c>", methods=["GET"])
 def return_img(a, b, c):
-    img_urls = choice(get_repo_images(a, b, c))
-    res = s.get(img_urls, stream=True)
+    img_urls = get_repo_images(a, b, c)
+    if img_urls == False:
+        print(">> Error!\n>> Redirecting to home")
+        return redirect("/")
+    r_img_urls = choice(get_repo_images(a, b, c))
+    res = s.get(r_img_urls, stream=True)
     res.raw.decode_content = True
     img = Image.open(res.raw)
     return serve_pil_image(img)
@@ -73,4 +74,5 @@ def return_img(a, b, c):
 
 @app.errorhandler(404)
 def page_not_found(e):
+    print(">> 404!\n>> Redirecting to home")
     return redirect("/")
