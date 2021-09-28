@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Random Repo Images</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 </head>
 
@@ -33,22 +32,19 @@
                     <h2 class="subtitle">
                         A simple tool to pick and return a random image from the given github repo folder.
                     </h2>
-                    Use this link structure:
-                    <span class="tag is-link is-light">random-repo-img.herokuapp.com/</span>
-                    <span class="tag is-info is-light">user</span>
-                    <span class="tag is-link is-light">/</span>
-                    <span class="tag is-info is-light">repo</span>
-                    <span class="tag is-link is-light">/</span>
-                    <span class="tag is-info is-light">image_folder</span>
-                </div>
-            </div>
 
-            <div class="column is-two-thirds">
-                <div class="columns is-centered">
+                    <div class="tags are-medium">
+                        <span class="tag is-primary">random-repo-img.herokuapp.com/</span>
+                        <span class="tag is-primary">user</span>
+                        <span class="tag is-primary">/</span>
+                        <span class="tag is-primary">repo</span>
+                        <span class="tag is-primary">/</span>
+                        <span class="tag is-primary">image_folder</span>
+                    </div>
                     <div class="field has-addons">
                         <div class="control">
                             <input class="input" id="input" size="72" type="text"
-                                placeholder="Enter the link, eg: https://github.com/agmmnn/random-repo-img/tree/master/sample_imgs">
+                                placeholder="https://github.com/agmmnn/random-repo-img/tree/master/sample_imgs">
                         </div>
                         <div class="control">
                             <button class="button is-primary is-fullwidth" id="ok">
@@ -57,53 +53,72 @@
                         </div>
                     </div>
                 </div>
-
+            </div>
+            <div class="column is-two-thirds">
                 <div class="box">
                     <div class="column">
                         Link:
                         <pre><code class="language-html" id="md_link"><a href="https://random-repo-img.herokuapp.com/agmmnn/random-repo-img/sample_imgs">https://random-repo-img.herokuapp.com/agmmnn/random-repo-img/sample_imgs</a></code></pre>
-                        <button class="button bd-copy" data-clipboard-action="copy" data-clipboard-target="#md_link">
+                        <button class="button is-light" data-clipboard-action="copy" data-clipboard-target="#md_link">
                             Copy
                         </button>
                     </div>
                     <div class="column">
                         HTML:
                         <pre><code class="language-html" id="md_html">&lt;img src=&quot;https://random-repo-img.herokuapp.com/agmmnn/random-repo-img/sample_imgs&quot; alt=&quot;random-repo-img&quot;&gt;</code></pre>
-                        <button class="button bd-copy" data-clipboard-action="copy" data-clipboard-target="#md_html">
+                        <button class="button is-light" data-clipboard-action="copy" data-clipboard-target="#md_html">
                             Copy
                         </button>
                     </div>
                     <div class="column">
                         Markdown:
                         <pre><code class="language-markdown" id="md_markdown">![img](https://random-repo-img.herokuapp.com/agmmnn/random-repo-img/sample_imgs "random-repo-img")</code></pre>
-                        <button class="button bd-copy" data-clipboard-action="copy"
+                        <button class="button is-light" data-clipboard-action="copy"
                             data-clipboard-target="#md_markdown">
                             Copy
                         </button>
                     </div>
                 </div>
             </div>
+            <style>
+                .input {
+                    background-color: rgb(240, 251, 246);
+                }
 
+                .box {
+                    background-color: rgb(240, 251, 246);
+                }
+            </style>
             <script>
                 const clipboard = new ClipboardJS('.button');
                 //
                 const button = document.getElementById('ok');
                 const url_start = "https://github.com/";
-                button.onclick = function () {
-                    const input = document.getElementById('input').value;
-                    if (input.startsWith(url_start)) {
-                        inp_1 = input.split(url_start)[1];
-                        inp_units = inp_1.split("/");
+                function url_out() {
+                    const input = document.getElementById('input');
+                    if (input.value.startsWith(url_start)) {
+                        const inp_units = input.value.split(url_start)[1].split("/");
                         if (inp_units.length === 5 && inp_units.includes("tree")) {
                             link = "https://random-repo-img.herokuapp.com/" + inp_units[0] + "/" + inp_units[1] + "/" + inp_units[4];
-                            console.log(link);
 
                             document.getElementById('md_link').innerHTML = "<a href=\"" + link + "\">" + "https://random-repo-img.herokuapp.com/" + inp_units[0] + "/" + inp_units[1] + "/" + inp_units[4]; +"</a>"
 
                             document.getElementById('md_html').innerHTML = "&lt;img src=&quot;" + link + "&quot; alt=&quot;random-repo-img&quot;&gt;"
 
                             document.getElementById('md_markdown').innerHTML = "![img](" + link + " \"random-repo-img\")"
-                        }
+                            return true;
+                        } return false;
+                    } return false;
+                }
+                button.onclick = function () {
+                    if (url_out()) {
+                        console.log(true);
+                        input.classList.add('is-info');
+                        input.classList.remove('is-danger');
+                    } else {
+                        console.log(false);
+                        input.classList.add('is-danger');
+                        input.classList.remove('is-info');
                     }
                 }
             </script>
