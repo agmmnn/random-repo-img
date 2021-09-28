@@ -2,4 +2,3 @@ gunicorn
 Flask
 requests
 Pillow
-rich
