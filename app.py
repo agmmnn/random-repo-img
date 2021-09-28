@@ -7,7 +7,7 @@ from PIL import Image
 
 app = Flask(__name__, static_url_path="/pages")
 
-GH_API_KEY = ""
+GH_API_KEY = "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"
 s = requests.Session()
 
 # https://random-repo-img.herokuapp.com/agmmnn/random-repo-img/sample_imgs
