@@ -1,27 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="has-background-success-light">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Random Repo Images</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 </head>
 
 <body>
+    <div class="column is-pulled-left">
+        <a href="https://github.com/agmmnn/random-repo-img" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
+                <path
+                    d="M0 0v24h24v-24h-24zm14.534 19.59c-.406.078-.534-.171-.534-.384v-2.195c0-.747-.262-1.233-.55-1.481 1.782-.198 3.654-.875 3.654-3.947 0-.874-.311-1.588-.824-2.147.083-.202.357-1.016-.079-2.117 0 0-.671-.215-2.198.82-.639-.18-1.323-.267-2.003-.271-.68.003-1.364.091-2.003.269-1.528-1.035-2.2-.82-2.2-.82-.434 1.102-.16 1.915-.077 2.118-.512.56-.824 1.273-.824 2.147 0 3.064 1.867 3.751 3.645 3.954-.229.2-.436.552-.508 1.07-.457.204-1.614.557-2.328-.666 0 0-.423-.768-1.227-.825 0 0-.78-.01-.055.487 0 0 .525.246.889 1.17 0 0 .463 1.428 2.688.944v1.489c0 .211-.129.459-.528.385-3.18-1.057-5.472-4.056-5.472-7.59 0-4.419 3.582-8 8-8s8 3.581 8 8c0 3.533-2.289 6.531-5.466 7.59z" />
+            </svg></a>
+    </div>
     <section class="section">
         <div class="container">
-            <h1 class="title">random-repo-img</h1>
-            <h2 class="subtitle">A simple tool to get random images from a GitHub repo.</h2>
-            <p class="subtitle">
-                <br>How to use: add image folder from repo to url like this:
-                <br><strong>random-repo-img.herokuapp.com/<span class="tag is-light">user</span>/<span
-                        class="tag is-light">repo</span>/<span class="tag is-light">image_folder</span></strong>
-            </p>
-            <p class="subtitle">
-                <span class="tag is-light">demo1: </span>
-                <a href="/agmmnn/random-repo-img/sample_imgs">/agmmnn/random-repo-img/sample_imgs</a>
-            </p>
+            <div class="columns is-gapless">
+                <div class="column">
+                    <h1 class="title is-2">
+                        🧤
+                    </h1>
+                </div>
+                <div class="column is-full">
+                    <h1 class="title is-2 is-spaced">
+                        random-repo-img
+                    </h1>
+                    <h2 class="subtitle">
+                        A simple tool to pick and return a random image from the given github repo folder.
+                    </h2>
+                    Use this link structure:
+                    <span class="tag is-link is-light">random-repo-img.herokuapp.com/</span>
+                    <span class="tag is-info is-light">user</span>
+                    <span class="tag is-link is-light">/</span>
+                    <span class="tag is-info is-light">repo</span>
+                    <span class="tag is-link is-light">/</span>
+                    <span class="tag is-info is-light">image_folder</span>
+                </div>
+            </div>
+
+            <div class="column is-two-thirds">
+                <div class="columns is-centered">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input class="input" id="input" size="72" type="text"
+                                placeholder="Enter the link, eg: https://github.com/agmmnn/random-repo-img/tree/master/sample_imgs">
+                        </div>
+                        <div class="control">
+                            <button class="button is-primary is-fullwidth" id="ok">
+                                OK
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="column">
+                        Link:
+                        <pre><code class="language-html" id="md_link"><a href="https://random-repo-img.herokuapp.com/agmmnn/random-repo-img/sample_imgs">https://random-repo-img.herokuapp.com/agmmnn/random-repo-img/sample_imgs</a></code></pre>
+                        <button class="button bd-copy" data-clipboard-action="copy" data-clipboard-target="#md_link">
+                            Copy
+                        </button>
+                    </div>
+                    <div class="column">
+                        HTML:
+                        <pre><code class="language-html" id="md_html">&lt;img src=&quot;https://random-repo-img.herokuapp.com/agmmnn/random-repo-img/sample_imgs&quot; alt=&quot;random-repo-img&quot;&gt;</code></pre>
+                        <button class="button bd-copy" data-clipboard-action="copy" data-clipboard-target="#md_html">
+                            Copy
+                        </button>
+                    </div>
+                    <div class="column">
+                        Markdown:
+                        <pre><code class="language-markdown" id="md_markdown">![img](https://random-repo-img.herokuapp.com/agmmnn/random-repo-img/sample_imgs "random-repo-img")</code></pre>
+                        <button class="button bd-copy" data-clipboard-action="copy"
+                            data-clipboard-target="#md_markdown">
+                            Copy
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                const clipboard = new ClipboardJS('.button');
+                //
+                const button = document.getElementById('ok');
+                const url_start = "https://github.com/";
+                button.onclick = function () {
+                    const input = document.getElementById('input').value;
+                    if (input.startsWith(url_start)) {
+                        inp_1 = input.split(url_start)[1];
+                        inp_units = inp_1.split("/");
+                        if (inp_units.length === 5 && inp_units.includes("tree")) {
+                            link = "https://random-repo-img.herokuapp.com/" + inp_units[0] + "/" + inp_units[1] + "/" + inp_units[4];
+                            console.log(link);
+
+                            document.getElementById('md_link').innerHTML = "<a href=\"" + link + "\">" + "https://random-repo-img.herokuapp.com/" + inp_units[0] + "/" + inp_units[1] + "/" + inp_units[4]; +"</a>"
+
+                            document.getElementById('md_html').innerHTML = "&lt;img src=&quot;" + link + "&quot; alt=&quot;random-repo-img&quot;&gt;"
+
+                            document.getElementById('md_markdown').innerHTML = "![img](" + link + " \"random-repo-img\")"
+                        }
+                    }
+                }
+            </script>
         </div>
     </section>
 </body>
