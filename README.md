@@ -14,9 +14,21 @@ A simple tool to pick and return a random image from the given github repo folde
 
 ![random](https://randomrepoimg.fly.dev/agmmnn/random-repo-img/sample_imgs)
 
-## Deploy
+## Development
 
+### Serve
+
+```py
+# using gunicorn
+gunicorn --bind 127.0.0.1:5000 app:app
+
+# using waitress
+waitress-serve --listen=127.0.0.1:5000 app:app
 ```
+
+### Deploy
+
+```py
 # using fly.io
 
 flyctl deploy
