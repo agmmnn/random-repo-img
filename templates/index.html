@@ -6,9 +6,9 @@
     <title>Random Repo Images</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
     />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
@@ -69,6 +69,7 @@
                   size="72"
                   type="text"
                   placeholder="https://github.com/agmmnn/random-repo-img/tree/master/sample_imgs"
+                  value="https://github.com/agmmnn/random-repo-img/tree/master/sample_imgs"
                 />
               </div>
               <div class="control">
@@ -83,7 +84,7 @@
           <div class="box">
             <div class="column">
               Link:
-              <pre><code class="language-html" id="md_link"><a href="https://random-repo-img.herokuapp.com/agmmnn/random-repo-img/sample_imgs">https://random-repo-img.herokuapp.com/agmmnn/random-repo-img/sample_imgs</a></code></pre>
+              <pre><code class="language-html" id="md_link"><a href="https://randomrepoimg.fly.dev/agmmnn/random-repo-img/sample_imgs">https://randomrepoimg.fly.dev/agmmnn/random-repo-img/sample_imgs</a></code></pre>
               <button
                 class="button is-light"
                 data-clipboard-action="copy"
@@ -94,7 +95,7 @@
             </div>
             <div class="column">
               HTML:
-              <pre><code class="language-html" id="md_html">&lt;img src=&quot;https://random-repo-img.herokuapp.com/agmmnn/random-repo-img/sample_imgs&quot; alt=&quot;random-repo-img&quot;&gt;</code></pre>
+              <pre><code class="language-html" id="md_html">&lt;img src=&quot;https://randomrepoimg.fly.dev/agmmnn/random-repo-img/sample_imgs&quot; alt=&quot;random-repo-img&quot;&gt;</code></pre>
               <button
                 class="button is-light"
                 data-clipboard-action="copy"
@@ -105,7 +106,7 @@
             </div>
             <div class="column">
               Markdown:
-              <pre><code class="language-markdown" id="md_markdown">![img](https://random-repo-img.herokuapp.com/agmmnn/random-repo-img/sample_imgs "random-repo-img")</code></pre>
+              <pre><code class="language-markdown" id="md_markdown">![img](https://randomrepoimg.fly.dev/agmmnn/random-repo-img/sample_imgs "random-repo-img")</code></pre>
               <button
                 class="button is-light"
                 data-clipboard-action="copy"
@@ -136,7 +137,7 @@
               const inp_units = input.value.split(url_start)[1].split("/");
               if (inp_units.length === 5 && inp_units.includes("tree")) {
                 link =
-                  "https://random-repo-img.herokuapp.com/" +
+                  "https://randomrepoimg.fly.dev/" +
                   inp_units[0] +
                   "/" +
                   inp_units[1] +
@@ -147,7 +148,7 @@
                   '<a href="' +
                   link +
                   '">' +
-                  "https://random-repo-img.herokuapp.com/" +
+                  "https://randomrepoimg.fly.dev/" +
                   inp_units[0] +
                   "/" +
                   inp_units[1] +

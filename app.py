@@ -10,7 +10,7 @@ app = Flask(__name__, static_url_path="/pages")
 GH_API_KEY = "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"
 s = requests.Session()
 
-# https://random-repo-img.herokuapp.com/agmmnn/random-repo-img/sample_imgs
+# https://randomrepoimg.fly.dev/agmmnn/random-repo-img/sample_imgs
 # https://api.github.com/repos/agmmnn/random-repo-img/contents/sample_imgs
 def get_repo_images(a, b, c):
     url = f"https://api.github.com/repos/{a}/{b}/contents/{c}"
