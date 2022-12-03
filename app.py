@@ -6,27 +6,20 @@ from io import BytesIO
 from PIL import Image
 
 app = Flask(__name__, static_url_path="/pages")
-
-GH_API_KEY = "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"
 s = requests.Session()
 
 # https://randomrepoimg.fly.dev/agmmnn/random-repo-img/sample_imgs
 # https://api.github.com/repos/agmmnn/random-repo-img/contents/sample_imgs
 def get_repo_images(a, b, c):
     url = f"https://api.github.com/repos/{a}/{b}/contents/{c}"
-    headers = {"Authorization": "token " + GH_API_KEY}
-    data = s.get(url, headers=headers).json()
+    data = s.get(url).json()
     imgs = []
-
     for i in data:
         try:
             if i["download_url"].split(".")[-1] in ["jpg", "png", "jpeg"]:
                 imgs.append(i["download_url"])
         except:
             return False
-    print(url)
-    print(imgs)
-    print(len(imgs))
     return imgs
 
 
@@ -63,7 +56,7 @@ def return_img_list(a, b, c):
 def return_img(a, b, c):
     img_urls = get_repo_images(a, b, c)
     if img_urls == False:
-        print(">> Error!\n>> Redirecting to home")
+        print(">> Error! Redirecting to home")
         return redirect("/")
     r_img_urls = choice(get_repo_images(a, b, c))
     res = s.get(r_img_urls, stream=True)
@@ -74,5 +67,5 @@ def return_img(a, b, c):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    print(">> 404!\n>> Redirecting to home")
+    print(">> 404! Redirecting to home")
     return redirect("/")
