@@ -65,7 +65,7 @@ def return_img(a, b, c):
     return serve_pil_image(img)
 
 
-@app.errorhandler(404)
-def page_not_found(e):
-    print(">> 404! Redirecting to home")
-    return redirect("/")
+# @app.errorhandler(404)
+# def page_not_found(e):
+#     print(">> 404! Redirecting to home")
+#     return redirect("/")
