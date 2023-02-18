@@ -128,58 +128,35 @@
         </style>
         <script>
           const clipboard = new ClipboardJS(".button");
-          //
           const button = document.getElementById("ok");
-          const url_start = "https://github.com/";
-          function url_out() {
-            const input = document.getElementById("input");
-            if (input.value.startsWith(url_start)) {
-              const inp_units = input.value.split(url_start)[1].split("/");
-              if (inp_units.length === 5 && inp_units.includes("tree")) {
-                link =
-                  "https://randomrepoimg.fly.dev/" +
-                  inp_units[0] +
-                  "/" +
-                  inp_units[1] +
-                  "/" +
-                  inp_units[4];
+          const urlStart = "https://github.com/";
 
-                document.getElementById("md_link").innerHTML =
-                  '<a href="' +
-                  link +
-                  '">' +
-                  "https://randomrepoimg.fly.dev/" +
-                  inp_units[0] +
-                  "/" +
-                  inp_units[1] +
-                  "/" +
-                  inp_units[4];
-                +"</a>";
+          const input = document.getElementById("input");
+          const mdLink = document.getElementById("md_link");
+          const mdHtml = document.getElementById("md_html");
+          const mdMarkdown = document.getElementById("md_markdown");
 
-                document.getElementById("md_html").innerHTML =
-                  "&lt;img src=&quot;" +
-                  link +
-                  "&quot; alt=&quot;random-repo-img&quot;&gt;";
+          button.addEventListener("click", () => {
+            if (input.value.startsWith(urlStart)) {
+              const inpUnits = input.value.split(urlStart)[1].split("/");
+              if (inpUnits.length === 5 && inpUnits.includes("tree")) {
+                const link = `/${inpUnits[0]}/${inpUnits[1]}/${inpUnits[4]}`;
 
-                document.getElementById("md_markdown").innerHTML =
-                  "![img](" + link + ' "random-repo-img")';
-                return true;
+                mdLink.innerHTML = `<a href="${link}">https://randomrepoimg.fly.dev/${inpUnits[0]}/${inpUnits[1]}/${inpUnits[4]}</a>`;
+                mdHtml.textContent = `<img src="https://randomrepoimg.fly.dev${link}" alt="random-repo-img">`;
+                mdMarkdown.innerHTML = `![img](https://randomrepoimg.fly.dev${link} "random-repo-img")`;
+
+                input.classList.add("is-info");
+                input.classList.remove("is-danger");
+              } else {
+                input.classList.add("is-danger");
+                input.classList.remove("is-info");
               }
-              return false;
-            }
-            return false;
-          }
-          button.onclick = function () {
-            if (url_out()) {
-              console.log(true);
-              input.classList.add("is-info");
-              input.classList.remove("is-danger");
             } else {
-              console.log(false);
               input.classList.add("is-danger");
               input.classList.remove("is-info");
             }
-          };
+          });
         </script>
       </div>
     </section>
