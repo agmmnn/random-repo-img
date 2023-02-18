@@ -20,7 +20,6 @@ def get_repo_images(owner: str, repo: str, path: str) -> Optional[List[str]]:
     url = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
     headers = {"Authorization": "token " + secrets["GH_API_KEY"]}
     data = s.get(url, headers=headers).json()
-    print(data)
     img_urls = [
         i["download_url"]
         for i in data
